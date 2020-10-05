@@ -1,0 +1,82 @@
+		body{
+			background-image: url(../images/log.png);
+			background-size: cover;
+		}
+		/*登录框*/
+		#box{
+			height: 400px;
+			width: 400px;
+			position: absolute;
+			right:100px ;
+			bottom: 50px;
+			overflow: hidden;
+			border: solid silver ;
+			opacity: 0.7;
+		}
+		/*内盒*/
+		#login{
+			height: 400px;
+			width: 300px;
+			margin: 10px auto;
+			margin-top: 50px;
+		}
+		/*用户 密码框*/
+		#name,#pw{
+			height: 40px;
+			width: 200px;
+			position: relative;
+			top: -35px;
+			left: 40px;			
+		}
+		/*验证码框*/
+		#chNu{
+			height: 40px;
+			width: 110px;
+			position: relative;
+			left: 40px;	
+			top: -25px;
+		}
+		/*验证码图片*/
+		#checkCode{
+			text-align: center;
+			height: 35px;
+			width: 60px;
+			background-color: darkgray;
+			font-size: 20px;
+			cursor: pointer;
+			border-radius: 5px;
+			position: relative;
+			left: 120px;	
+			top: -35px;
+		}
+		/*验证码检查提示框位置*/
+		#checkcd{
+			position: relative;
+			left: 185px;	
+			top: -65px;
+		}
+		/*检查提示框大小*/
+		#checkName,#checkPw,#checkcd{
+			font-size: 12px;
+			color: red;
+		}
+		/*检查所有*/
+		#checkAll{
+			font-size: 13px;
+			color: red;
+			position: relative;
+			top: -15px;
+			left: 180px;
+		}
+		/*按钮*/
+		#btn{
+			position: relative;
+			left: 120px;	
+			
+		}
+		/*选择框*/
+		#choice{
+			position: relative;
+			top: -15px;
+			left: 60px;
+		}

@@ -1,0 +1,60 @@
+.userlogin{
+				display: flex;
+				flex-direction: row-reverse;
+			}
+			#exit{
+				position: relative;
+				left: -50px;
+			}
+			#loginname{
+			position: relative;
+			left: -250px;
+			}
+			#nav{
+				height: 460px;
+				width: 250px;
+				background-color: #f5f5f5;
+			}
+			.panel .panel-default{
+				background-color: #C0C0B0;
+			}
+			li{
+				position: relative;
+				left: 30px;
+				cursor: pointer;
+			}
+			li:hover{
+				color: cornflowerblue;
+			}
+			#userMessage:hover,#schoolMes:hover{
+				color: rosybrown;
+			}
+			#bottom{
+				height: 50px;
+				width: 500px;
+				position: absolute;
+				bottom: -15px;
+				right: 300px;
+			}
+			.jumbotron{
+				display: flex;
+				flex-direction: row-reverse;
+				width: 1100px;
+				height: 460px;
+				position: absolute;
+				left: 350px;
+				top: 170px;
+			}
+			#schoolMes{
+				position: relative;
+				left: -120px;
+				cursor: pointer;
+			}
+			.list{
+				position: relative;
+				top: -30px;
+			}
+			.panel panel-danger,.panel panel-success,.panel panel-info,panel panel-warning{
+				height: 400px;
+				overflow: scroll;
+			}

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace表示命名空间，只要唯一即可 -->
+<mapper namespace="com.dao.TeacherDao">
+    <resultMap id="findAllTea" type="Teacher">
+        <id property="tea_id" column="tea_id"/>
+        <result property="userName" column="userName"/>
+        <result property="password" column="password"/>
+        <result property="teaName" column="teaName"/>
+        <result property="teaNum" column="teaNum"/>
+        <result property="teaCourse" column="teaCourse"/>
+        <result property="teaSex" column="teaSex"/>
+        <result property="teaAddress" column="teaAddress"/>
+        <result property="teaPhone" column="teaPhone"/>
+        <result property="teaEmail" column="teaEmail"/>
+        <result property="teaQQ" column="teaQQ"/>
+        <result property="teaMessage" column="teaMessage"/>
+        <association property="classes" javaType="Class">
+            <id property="class_id" column="class_id"/>
+            <result property="gradeName" column="gradeName"/>
+            <result property="className" column="className"/>
+        </association>
+    </resultMap>
+    <resultMap id="finTeacherExam" type="Teacher">
+        <id property="tea_id" column="tea_id"/>
+        <result property="teaName" column="teaName"/>
+        <result property="teaNum" column="teaNum"/>
+        <association property="examClass" javaType="Class">
+            <id property="class_id" column="class_id"/>
+            <result property="gradeName" column="gradeName"/>
+            <result property="className" column="className"/>
+        </association>
+    </resultMap>
+    <resultMap id="findClassStu" type="Student">
+            <id property="stu_id" column="stu_id"/>
+            <result property="userName" column="userName"/>
+            <result property="password" column="password"/>
+            <result property="stuName" column="stuName"/>
+            <result property="stuNum" column="stuNum"/>
+            <result property="stuSex" column="stuSex"/>
+            <result property="stuBirth" column="stuBirth"/>
+            <result property="stuAddress" column="stuAddress"/>
+            <result property="stuPhone" column="stuPhone"/>
+            <result property="stuEmail" column="stuEmail"/>
+            <result property="stuQQ" column="stuQQ"/>
+            <result property="message" column="message"/>
+    </resultMap>
+    <!--老师登录-->
+    <select id="login" parameterType="String" resultType="teacher">
+        select * from teacher where
+         userName= #{userName} and password= #{password}
+    </select>
+    <!--查看老师信息-->
+    <select id="findAllTeacher" parameterType="teacher" resultMap="findAllTea">
+        SELECT t.*,c.* FROM teacher t
+        LEFT JOIN teacher_middle tm ON t.tea_id=tm.tea_id
+        LEFT JOIN class c ON c.class_id=tm.class_id
+        <where>
+
+            <if test="tea_id !=null and tea_id!=''">
+                and t.tea_id= #{tea_id}
+            </if>
+            <if test="teaName !=null and teaName !=''">
+                and t.teaName= #{teaName}
+            </if>
+
+            <if test="userName !=null and userName !=''">
+                and t.userName= #{userName}
+            </if>
+
+            <if test="password !=null and password !=''">
+                and t.password= #{password}
+            </if>
+            <if test="teaCourse !=null and teaCourse !=''">
+                and t.teaCourse= #{teaCourse}
+            </if>
+            <if test="teaNum !=null and teaNum !=''">
+                and t.teaNum= #{teaNum}
+            </if>
+        </where>
+    </select>
+    <!--修改老师信息-->
+    <update id="updateTeacher" parameterType="teacher">
+        update teacher
+        <set>
+            <if test="userName !=null and userName !=''">
+                userName= #{userName},
+            </if>
+            <if test="password !=null and password !=''">
+                password= #{password},
+            </if>
+            <if test="teaName !=null and teaName !=''">
+                teaName= #{teaName},
+            </if>
+            <if test="teaNum !=null and teaNum !=''">
+                teaNum= #{teaNum},
+            </if>
+            <if test="teaSex !=null and teaSex !=''">
+                teaSex= #{teaSex},
+            </if>
+
+            <if test="teaCourse !=null and teaCourse !=''">
+                teaCourse= #{teaCourse},
+            </if>
+
+            <if test="teaAddress !=null and teaAddress!=''">
+                teaAddress= #{teaAddress},
+            </if>
+
+            <if test="teaPhone !=null and teaPhone !=''">
+                teaPhone= #{teaPhone},
+            </if>
+
+            <if test="teaEmail !=null and teaEmail !=''">
+                teaEmail= #{teaEmail},
+            </if>
+
+            <if test="teaQQ !=null and teaQQ !=''">
+                teaQQ= #{teaQQ},
+            </if>
+            <if test="teaMessage !=null and teaMessage !=''">
+                teaMessage= #{teaMessage},
+            </if>
+        </set>
+        where tea_id= #{tea_id}
+    </update>
+    <!--查看班级学生-->
+    <select id="findClassStu" parameterType="Class" resultMap="findClassStu">
+
+      SELECT s.*,c.*FROM
+        student s
+        LEFT JOIN middle m ON s.stu_id=m.stu_id
+        LEFT JOIN class c ON m.class_id=c.class_id
+        <where>
+        <if test="class_id !=null and class_id!=''">
+            and c.class_id= #{class_id}
+        </if>
+        <if test="gradeName !=null and gradeName !=''">
+            and c.gradeName= #{gradeName}
+        </if>
+            <if test="className !=null and className !=''">
+                and c.className= #{className}
+            </if>
+        </where>
+    </select>
+    <!--查找老师监考考场-->
+    <select id="finTeacherExam" parameterType="teacher" resultMap="finTeacherExam">
+        SELECT * FROM teacher t JOIN etc_middle et ON t.tea_id=et.tea_id
+        JOIN class c ON c.class_id= et.class_id
+
+        <where>
+            <if test="tea_id !=null and tea_id!=''">
+                and t.tea_id= #{tea_id}
+            </if>
+            <if test="teaName !=null and teaName !=''">
+                and t.teaName= #{teaName}
+            </if>
+
+            <if test="userName !=null and userName !=''">
+                and t.userName= #{userName}
+            </if>
+
+            <if test="password !=null and password !=''">
+                and t.password= #{password}
+            </if>
+            <if test="teaCourse !=null and teaCourse !=''">
+                and t.teaCourse= #{teaCourse}
+            </if>
+            <if test="teaNum !=null and teaNum !=''">
+                and t.teaNum= #{teaNum}
+            </if>
+        </where>
+    </select>
+    <!--查看学生成绩-->
+    <select id="findGrades" parameterType="Grade" resultType="grade">
+        select * from grade
+        <where>
+            <if test="gra_id !=null and gra_id!=''">
+                and gra_id= #{gra_id}
+            </if>
+            <if test="stu_name !=null and stu_name !=''">
+                and stu_name= #{stu_name}
+            </if>
+
+            <if test="stu_Grade !=null and stu_Grade !=''">
+                and stu_Grade= #{stu_Grade}
+            </if>
+
+            <if test="stu_Class !=null and stu_Class !=''">
+                and stu_Class= #{stu_Class}
+            </if>
+
+            <if test="gra_Chinese !=null and gra_Chinese !=''">
+                and gra_Chinese= #{gra_Chinese}
+            </if>
+            <if test="gra_Math !=null and gra_Math !=''">
+                and gra_Math= #{gra_Math}
+            </if>
+            <if test="gra_English !=null and gra_English !=''">
+                and gra_English= #{gra_English}
+            </if>
+            <if test="allGrade !=null and allGrade !=''">
+                and allGrade= #{allGrade}
+            </if>
+        </where>
+        ORDER BY allGrade DESC
+    </select>
+    <!--录入学生成绩-->
+    <update id="updateGrades" parameterType="grade">
+        update grade
+        <set>
+            <if test="gra_Chinese !=null and gra_Chinese !=''">
+                gra_Chinese= #{gra_Chinese},
+            </if>
+            <if test="gra_Math !=null and gra_Math !=''">
+                gra_Math= #{gra_Math},
+            </if>
+            <if test="gra_English !=null and gra_English !=''">
+                gra_English= #{gra_English},
+            </if>
+            <if test="allGrade !=null and allGrade !=''">
+               allGrade= #{allGrade},
+            </if>
+        </set>
+        where gra_id= #{gra_id}
+    </update>
+    <!--清空学生成绩-->
+    <update id="clearGrades">
+        UPDATE grade SET gra_Chinese=0,gra_Math=0,
+        gra_English=0,allGrade=0
+    </update>
+</mapper>
